@@ -1,0 +1,1254 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Amsterdam 2024 🌷</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #FFF8F0;
+            --card: #FFFFFF;
+            --orange: #FF6B35;
+            --orange-light: #FFE8DE;
+            --blue: #4A90D9;
+            --blue-light: #E3F2FD;
+            --pink: #FF69B4;
+            --pink-light: #FFE4F1;
+            --green: #4CAF50;
+            --green-light: #E8F5E9;
+            --yellow: #FFD93D;
+            --purple: #9C27B0;
+            --purple-light: #F3E5F5;
+            --red: #FF5252;
+            --text: #2D3436;
+            --text-light: #636E72;
+            --text-muted: #B2BEC3;
+            --shadow: 0 2px 12px rgba(0,0,0,0.08);
+            --shadow-hover: 0 4px 20px rgba(0,0,0,0.12);
+            --radius: 16px;
+            --radius-sm: 12px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            padding-bottom: 80px;
+        }
+
+        .bg-waves {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 120px;
+            background: linear-gradient(180deg, transparent 0%, rgba(74,144,217,0.08) 100%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .app {
+            position: relative;
+            z-index: 1;
+            max-width: 420px;
+            margin: 0 auto;
+            padding: 0 12px;
+        }
+
+        /* Compact Header */
+        header {
+            padding: 16px 0 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header-emoji {
+            font-size: 2rem;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .header-text h1 {
+            font-size: 1.3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--orange), var(--pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header-text p {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .clock-badge {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: white;
+            padding: 8px 14px;
+            border-radius: 100px;
+            box-shadow: var(--shadow);
+        }
+
+        .clock-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--green);
+            border-radius: 50%;
+            animation: pulse 1.5s ease infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); opacity: 0.7; }
+        }
+
+        .clock-time {
+            font-size: 0.9rem;
+            font-weight: 700;
+        }
+
+        /* Compact Bookings */
+        .bookings-section {
+            margin: 12px 0;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .section-title {
+            font-size: 0.85rem;
+            font-weight: 700;
+        }
+
+        .toggle-btn {
+            background: var(--blue-light);
+            border: none;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-family: inherit;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--blue);
+            cursor: pointer;
+        }
+
+        .bookings-scroll {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding: 4px 0;
+            scrollbar-width: none;
+        }
+
+        .bookings-scroll::-webkit-scrollbar { display: none; }
+
+        .bookings-scroll.hidden { display: none; }
+
+        .booking-chip {
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 12px;
+            background: white;
+            border-radius: 25px;
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            transition: all 0.2s;
+            border-left: 3px solid var(--yellow);
+        }
+
+        .booking-chip.done {
+            border-left-color: var(--green);
+            opacity: 0.7;
+        }
+
+        .booking-chip:hover {
+            transform: translateY(-2px);
+        }
+
+        .booking-chip span {
+            font-size: 0.75rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .booking-chip a {
+            color: var(--blue);
+            font-size: 0.8rem;
+        }
+
+        /* Day Pills - Compact */
+        .day-nav {
+            display: flex;
+            gap: 6px;
+            margin: 16px 0 12px;
+        }
+
+        .day-pill {
+            flex: 1;
+            padding: 10px 6px;
+            background: white;
+            border: 2px solid transparent;
+            border-radius: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+
+        .day-pill.active {
+            background: linear-gradient(135deg, var(--orange), var(--pink));
+            transform: scale(1.05);
+        }
+
+        .day-num {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: var(--text);
+        }
+
+        .day-pill.active .day-num { color: white; }
+
+        .day-name {
+            font-size: 0.55rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        .day-pill.active .day-name { color: rgba(255,255,255,0.9); }
+
+        /* Progress - Compact Inline */
+        .progress-bar {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: linear-gradient(135deg, var(--orange), var(--pink));
+            padding: 12px 16px;
+            border-radius: var(--radius);
+            color: white;
+            margin-bottom: 12px;
+        }
+
+        .progress-bar .label {
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .progress-track {
+            flex: 1;
+            height: 8px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: white;
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        .progress-pct {
+            font-size: 0.85rem;
+            font-weight: 800;
+            min-width: 40px;
+            text-align: right;
+        }
+
+        /* Controls - Compact */
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .hide-toggle {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .hide-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-light);
+        }
+
+        .toggle-switch {
+            width: 40px;
+            height: 22px;
+            background: #DFE6E9;
+            border-radius: 11px;
+            cursor: pointer;
+            position: relative;
+            transition: background 0.3s;
+        }
+
+        .toggle-switch.on { background: var(--green); }
+
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 18px;
+            height: 18px;
+            background: white;
+            border-radius: 50%;
+            transition: transform 0.3s;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+        }
+
+        .toggle-switch.on::after { transform: translateX(18px); }
+
+        .add-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 18px;
+            background: linear-gradient(135deg, var(--blue), var(--purple));
+            border: none;
+            border-radius: 25px;
+            color: white;
+            font-family: inherit;
+            font-size: 0.8rem;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(74,144,217,0.3);
+            transition: all 0.2s;
+        }
+
+        .add-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* COMPACT Activity Cards */
+        .activities {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .activity {
+            background: white;
+            border-radius: var(--radius-sm);
+            box-shadow: var(--shadow);
+            padding: 12px;
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+            transition: all 0.2s;
+            position: relative;
+            border-left: 4px solid #DFE6E9;
+        }
+
+        .activity:hover {
+            transform: translateX(3px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .activity.done { opacity: 0.5; }
+        .activity.hidden { display: none; }
+
+        .progress-bar.hidden, .controls.hidden, #activities.hidden { display: none; }
+
+        .activity.meal { border-left-color: var(--orange); }
+        .activity.museum { border-left-color: var(--pink); }
+        .activity.experience { border-left-color: var(--blue); }
+        .activity.shopping { border-left-color: var(--green); }
+
+        /* Actions in top right */
+        .activity-actions {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            display: flex;
+            gap: 2px;
+        }
+
+        .act-icon {
+            width: 26px;
+            height: 26px;
+            border: none;
+            background: transparent;
+            font-size: 0.85rem;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.2s;
+            display: grid;
+            place-items: center;
+            opacity: 0.5;
+        }
+
+        .activity:hover .act-icon { opacity: 1; }
+        .act-icon:hover { background: var(--bg); transform: scale(1.1); }
+        .act-icon.del:hover { background: #FFEBEE; }
+
+        .check-circle {
+            width: 24px;
+            height: 24px;
+            border: 2px solid #DFE6E9;
+            border-radius: 50%;
+            cursor: pointer;
+            flex-shrink: 0;
+            transition: all 0.2s;
+            display: grid;
+            place-items: center;
+            margin-top: 2px;
+        }
+
+        .check-circle:hover {
+            border-color: var(--green);
+            background: var(--green-light);
+        }
+
+        .check-circle.checked {
+            background: var(--green);
+            border-color: var(--green);
+            color: white;
+            font-size: 0.7rem;
+            font-weight: 700;
+        }
+
+        .activity-content {
+            flex: 1;
+            min-width: 0;
+            padding-right: 50px;
+        }
+
+        .activity-top {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 4px;
+            flex-wrap: wrap;
+        }
+
+        .time-badge {
+            padding: 3px 8px;
+            background: linear-gradient(135deg, var(--orange), var(--pink));
+            border-radius: 10px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .cat-badge {
+            padding: 3px 8px;
+            border-radius: 10px;
+            font-size: 0.6rem;
+            font-weight: 700;
+        }
+
+        .cat-badge.meal { background: var(--orange-light); color: var(--orange); }
+        .cat-badge.museum { background: var(--pink-light); color: var(--pink); }
+        .cat-badge.experience { background: var(--blue-light); color: var(--blue); }
+        .cat-badge.shopping { background: var(--green-light); color: var(--green); }
+
+        .activity-title {
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-bottom: 2px;
+            line-height: 1.3;
+        }
+
+        .done .activity-title {
+            text-decoration: line-through;
+            color: var(--text-muted);
+        }
+
+        .activity-loc {
+            font-size: 0.75rem;
+            color: var(--text-light);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .activity-notes {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+            padding: 6px 10px;
+            background: var(--bg);
+            border-radius: 8px;
+            line-height: 1.3;
+        }
+
+        .activity-links {
+            display: flex;
+            gap: 6px;
+            margin-top: 8px;
+        }
+
+        .link-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .link-pill.web {
+            background: linear-gradient(135deg, var(--blue), var(--purple));
+            color: white;
+        }
+
+        .link-pill.maps {
+            background: linear-gradient(135deg, var(--green), #8BC34A);
+            color: white;
+        }
+
+        .link-pill:hover { transform: translateY(-2px); }
+
+        /* Empty State */
+        .empty {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .empty-emoji { font-size: 3rem; margin-bottom: 10px; }
+        .empty-text { font-size: 0.9rem; color: var(--text-muted); font-weight: 600; }
+
+        /* Checklist Section */
+        .checklist-section {
+            margin-bottom: 16px;
+        }
+
+        .checklist-section.hidden {
+            display: none;
+        }
+
+        .checklist-group {
+            background: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 12px;
+            overflow: hidden;
+        }
+
+        .checklist-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 16px;
+            background: linear-gradient(135deg, var(--orange), var(--pink));
+            color: white;
+            cursor: pointer;
+        }
+
+        .checklist-header.blue {
+            background: linear-gradient(135deg, var(--blue), var(--purple));
+        }
+
+        .checklist-header.green {
+            background: linear-gradient(135deg, var(--green), #8BC34A);
+        }
+
+        .checklist-header h3 {
+            font-size: 0.9rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .checklist-header .count {
+            font-size: 0.75rem;
+            background: rgba(255,255,255,0.3);
+            padding: 2px 8px;
+            border-radius: 10px;
+        }
+
+        .checklist-items {
+            padding: 8px;
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            border-radius: 10px;
+            transition: background 0.2s;
+        }
+
+        .checklist-item:hover {
+            background: var(--bg);
+        }
+
+        .checklist-item.done {
+            opacity: 0.5;
+        }
+
+        .checklist-item .check-circle {
+            width: 22px;
+            height: 22px;
+            border: 2px solid #DFE6E9;
+            border-radius: 50%;
+            cursor: pointer;
+            flex-shrink: 0;
+            transition: all 0.2s;
+            display: grid;
+            place-items: center;
+            font-size: 0.65rem;
+        }
+
+        .checklist-item .check-circle:hover {
+            border-color: var(--green);
+            background: var(--green-light);
+        }
+
+        .checklist-item .check-circle.checked {
+            background: var(--green);
+            border-color: var(--green);
+            color: white;
+        }
+
+        .checklist-item-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .checklist-item-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .done .checklist-item-title {
+            text-decoration: line-through;
+            color: var(--text-muted);
+        }
+
+        .checklist-item-sub {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+        }
+
+        .checklist-item-link {
+            flex-shrink: 0;
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--blue), var(--purple));
+            border-radius: 8px;
+            display: grid;
+            place-items: center;
+            color: white;
+            text-decoration: none;
+            font-size: 0.8rem;
+            transition: transform 0.2s;
+        }
+
+        .checklist-item-link:hover {
+            transform: scale(1.1);
+        }
+
+        .checklist-item-link.booked {
+            background: linear-gradient(135deg, var(--green), #8BC34A);
+        }
+
+        /* Modal */
+        .modal-bg {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(6px);
+            z-index: 500;
+            align-items: flex-end;
+            justify-content: center;
+        }
+
+        .modal-bg.open { display: flex; }
+
+        .modal-sheet {
+            background: white;
+            width: 100%;
+            max-width: 420px;
+            max-height: 85vh;
+            border-radius: 24px 24px 0 0;
+            overflow: hidden;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
+        }
+
+        .modal-handle {
+            width: 36px;
+            height: 4px;
+            background: #DFE6E9;
+            border-radius: 2px;
+            margin: 10px auto 16px;
+        }
+
+        .modal-content {
+            padding: 0 20px 28px;
+            max-height: calc(85vh - 40px);
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-title {
+            font-size: 1.2rem;
+            font-weight: 800;
+        }
+
+        .modal-close {
+            width: 36px;
+            height: 36px;
+            background: var(--bg);
+            border: none;
+            border-radius: 10px;
+            font-size: 1.3rem;
+            color: var(--text-light);
+            cursor: pointer;
+        }
+
+        .field { margin-bottom: 14px; }
+
+        .field-label {
+            display: block;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--text-light);
+            margin-bottom: 6px;
+            text-transform: uppercase;
+        }
+
+        .field-input,
+        .field-select,
+        .field-textarea {
+            width: 100%;
+            padding: 12px 14px;
+            background: var(--bg);
+            border: 2px solid transparent;
+            border-radius: 12px;
+            font-family: inherit;
+            font-size: 0.95rem;
+            color: var(--text);
+            transition: all 0.2s;
+        }
+
+        .field-input:focus,
+        .field-select:focus,
+        .field-textarea:focus {
+            outline: none;
+            border-color: var(--blue);
+            background: white;
+        }
+
+        .field-select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23636E72'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 20px;
+        }
+
+        .field-textarea { min-height: 70px; resize: vertical; }
+
+        .modal-btns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .modal-btn {
+            padding: 14px;
+            border: none;
+            border-radius: 14px;
+            font-family: inherit;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .modal-btn.cancel { background: var(--bg); color: var(--text-light); }
+        .modal-btn.save {
+            background: linear-gradient(135deg, var(--orange), var(--pink));
+            color: white;
+        }
+
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-thumb { background: #DFE6E9; border-radius: 2px; }
+    </style>
+</head>
+<body>
+    <div class="bg-waves"></div>
+
+    <div class="app">
+        <header>
+            <div class="header-left">
+                <div class="header-emoji">🌷</div>
+                <div class="header-text">
+                    <h1>Amsterdam</h1>
+                    <p>26 – 30 Dez 2024</p>
+                </div>
+            </div>
+            <div class="clock-badge">
+                <div class="clock-dot"></div>
+                <span class="clock-time" id="clock">00:00</span>
+            </div>
+        </header>
+
+        <!-- Day Nav with Checklist Tab -->
+        <div class="day-nav" id="dayNav">
+            <button class="day-pill" data-day="checklist"><div class="day-num">📋</div><div class="day-name">Check</div></button>
+            <button class="day-pill active" data-day="26"><div class="day-num">26</div><div class="day-name">Qui</div></button>
+            <button class="day-pill" data-day="27"><div class="day-num">27</div><div class="day-name">Sex</div></button>
+            <button class="day-pill" data-day="28"><div class="day-num">28</div><div class="day-name">Sáb</div></button>
+            <button class="day-pill" data-day="29"><div class="day-num">29</div><div class="day-name">Dom</div></button>
+            <button class="day-pill" data-day="30"><div class="day-num">30</div><div class="day-name">Seg</div></button>
+        </div>
+        
+        <!-- Checklist Section (hidden by default) -->
+        <div id="checklistSection" class="checklist-section hidden"></div>
+
+        <!-- Progress Bar -->
+        <div class="progress-bar">
+            <span class="label">Progresso</span>
+            <div class="progress-track">
+                <div class="progress-fill" id="progressFill" style="width:0%"></div>
+            </div>
+            <span class="progress-pct" id="progressPct">0%</span>
+        </div>
+
+        <!-- Controls -->
+        <div class="controls">
+            <div class="hide-toggle">
+                <span class="hide-label">Esconder ✓</span>
+                <div class="toggle-switch" id="hideToggle"></div>
+            </div>
+            <button class="add-btn" id="addBtn">➕ Adicionar</button>
+        </div>
+
+        <!-- Activities -->
+        <div class="activities" id="activities"></div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal-bg" id="modalBg">
+        <div class="modal-sheet">
+            <div class="modal-handle"></div>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title" id="modalTitle">Adicionar</h2>
+                    <button class="modal-close" id="modalClose">×</button>
+                </div>
+                <form id="actForm">
+                    <input type="hidden" id="editId">
+                    <div class="field">
+                        <label class="field-label">Hora</label>
+                        <input type="time" class="field-input" id="fTime" required>
+                    </div>
+                    <div class="field">
+                        <label class="field-label">Título</label>
+                        <input type="text" class="field-input" id="fTitle" placeholder="Ex: Jantar De Belhamel" required>
+                    </div>
+                    <div class="field">
+                        <label class="field-label">Local</label>
+                        <input type="text" class="field-input" id="fLoc" placeholder="Ex: Brouwersgracht 60">
+                    </div>
+                    <div class="field">
+                        <label class="field-label">Categoria</label>
+                        <select class="field-select" id="fCat">
+                            <option value="">Geral</option>
+                            <option value="meal">🍽️ Refeição</option>
+                            <option value="museum">🏛️ Museu</option>
+                            <option value="experience">✨ Experiência</option>
+                            <option value="shopping">🛍️ Compras</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label class="field-label">Website</label>
+                        <input type="url" class="field-input" id="fUrl" placeholder="https://...">
+                    </div>
+                    <div class="field">
+                        <label class="field-label">Google Maps</label>
+                        <input type="url" class="field-input" id="fMaps" placeholder="https://maps.google.com/...">
+                    </div>
+                    <div class="field">
+                        <label class="field-label">Notas</label>
+                        <textarea class="field-textarea" id="fNotes" placeholder="Info extra..."></textarea>
+                    </div>
+                    <div class="modal-btns">
+                        <button type="button" class="modal-btn cancel" id="cancelBtn">Cancelar</button>
+                        <button type="submit" class="modal-btn save">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // COMPLETE AMSTERDAM ITINERARY - All major attractions included
+        const DATA = {
+            bookings: [
+                { id: 'b1', name: 'Anne Frank House', date: '29 Dez 14:30', url: 'https://www.annefrank.org', done: false },
+                { id: 'b2', name: 'Van Gogh Museum', date: '27 Dez 14:00', url: 'https://www.vangoghmuseum.nl', done: false },
+                { id: 'b3', name: 'Rijksmuseum', date: '27 Dez 10:00', url: 'https://www.rijksmuseum.nl', done: false },
+                { id: 'b4', name: 'Moco Museum', date: '27 Dez 15:30', url: 'https://mocomuseum.com', done: false },
+                { id: 'b5', name: 'Jewel Canal Cruise', date: '28 Dez 19:00', url: 'https://www.amsterdamjewelcruises.com', done: false },
+                { id: 'b6', name: 'A\'DAM Lookout', date: '28 Dez 17:00', url: 'https://www.adamlookout.com', done: false },
+                { id: 'b7', name: 'Vinkeles ⭐⭐', date: '29 Dez 19:30', url: 'https://www.vinkeles.com', done: false },
+            ],
+            preTrip: [
+                { id: 'p1', name: 'Passaportes válidos', sub: 'Verificar validade > 6 meses', done: false },
+                { id: 'p2', name: 'Seguro de viagem', sub: 'Cartão Europeu ou seguro privado', done: false },
+                { id: 'p3', name: 'Voos reservados', sub: 'Check-in online 24h antes', done: false },
+                { id: 'p4', name: 'Hotel Andaz confirmado', sub: 'Prinsengracht 587', done: false },
+                { id: 'p5', name: 'Transferes aeroporto', sub: 'Trem Schiphol → Central (15 min)', done: false },
+                { id: 'p6', name: 'App GVB ou OV-chipkaart', sub: 'Transportes públicos Amsterdam', done: false },
+                { id: 'p7', name: 'Euros em dinheiro', sub: 'Alguns locais não aceitam cartão', done: false },
+                { id: 'p8', name: 'Roupa quente', sub: 'Dezembro: 2-7°C, chuva provável', done: false },
+                { id: 'p9', name: 'Sapatos confortáveis', sub: 'Muita caminhada em calçada', done: false },
+                { id: 'p10', name: 'Carregador telemóvel', sub: 'Powerbank recomendado', done: false },
+                { id: 'p11', name: 'Google Maps offline', sub: 'Descarregar mapa de Amsterdam', done: false },
+            ],
+            restaurants: [
+                { id: 'r1', name: 'De Belhamel', date: '26 Dez 20:00', sub: '+31 20 622 10 95', url: 'https://www.belhamel.nl', done: false },
+                { id: 'r2', name: 'Rijsel', date: '27 Dez 20:00', sub: 'Reservar!', url: 'https://www.rijsel.com', done: false },
+                { id: 'r3', name: 'Toscanini', date: '28 Dez 12:30', sub: '+31 20 623 28 13', done: false },
+            ],
+            activities: {
+                // DAY 26 - ARRIVAL + JORDAAN
+                26: [
+                    { id: 'a1', time: '17:00', title: 'Chegada Schiphol', loc: 'Aeroporto', cat: '', url: '', maps: 'https://maps.google.com/?q=Schiphol+Airport', notes: 'Trem direto 15 min €5.40', done: false },
+                    { id: 'a2', time: '18:00', title: 'Check-in Andaz', loc: 'Prinsengracht 587', cat: '', url: 'https://www.hyatt.com/andaz', maps: 'https://maps.google.com/?q=Andaz+Amsterdam+Prinsengracht', notes: 'Welcome drink! Canal view', done: false },
+                    { id: 'a3', time: '19:00', title: 'Passeio Jordaan', loc: 'Bloemgracht', cat: 'experience', url: '', maps: 'https://maps.google.com/?q=Bloemgracht+Amsterdam', notes: 'Canais mais bonitos', done: false },
+                    { id: 'a4', time: '20:00', title: 'Jantar De Belhamel', loc: 'Brouwersgracht 60', cat: 'meal', url: 'https://www.belhamel.nl', maps: 'https://maps.google.com/?q=De+Belhamel+Amsterdam', notes: 'Art Nouveau, canal view', done: false },
+                    { id: 'a5', time: '21:30', title: 'Light Festival', loc: 'Canais iluminados', cat: 'experience', url: 'https://amsterdamlightfestival.com', maps: 'https://maps.google.com/?q=Herengracht+Amsterdam', notes: 'Até 23h, grátis a pé!', done: false },
+                ],
+                // DAY 27 - MUSEUMPLEIN ZONE (Complete!)
+                27: [
+                    { id: 'b1', time: '09:00', title: 'Pequeno-almoço Andaz', loc: 'Bluespoon', cat: 'meal', url: '', maps: '', notes: 'Jardim interior', done: false },
+                    { id: 'b2', time: '10:00', title: 'Rijksmuseum', loc: 'Museumstraat 1', cat: 'museum', url: 'https://www.rijksmuseum.nl', maps: 'https://maps.google.com/?q=Rijksmuseum+Amsterdam', notes: 'Night Watch, Vermeer ~2.5h', done: false },
+                    { id: 'b3', time: '12:30', title: 'Almoço Seafood Bar', loc: 'Van Baerlestraat 5', cat: 'meal', url: 'https://www.theseafoodbar.nl', maps: 'https://maps.google.com/?q=The+Seafood+Bar+Van+Baerlestraat', notes: 'Ostras, lobster roll', done: false },
+                    { id: 'b4', time: '14:00', title: 'Van Gogh Museum', loc: 'Museumplein 6', cat: 'museum', url: 'https://www.vangoghmuseum.nl', maps: 'https://maps.google.com/?q=Van+Gogh+Museum+Amsterdam', notes: 'Girassóis, Quarto ~1.5h', done: false },
+                    { id: 'b4b', time: '15:30', title: 'Moco Museum', loc: 'Honthorststraat 20', cat: 'museum', url: 'https://mocomuseum.com', maps: 'https://maps.google.com/?q=Moco+Museum+Amsterdam', notes: 'Banksy, Warhol, arte moderna ~1h', done: false },
+                    { id: 'b5', time: '16:45', title: 'Vondelpark', loc: 'Parque central', cat: 'experience', url: '', maps: 'https://maps.google.com/?q=Vondelpark+Amsterdam', notes: 't Blauwe Theehuis café', done: false },
+                    { id: 'b6', time: '17:15', title: 'P.C. Hooftstraat', loc: 'Rua de luxo', cat: 'shopping', url: '', maps: 'https://maps.google.com/?q=P.C.+Hooftstraat+Amsterdam', notes: 'LV, Chanel, Gucci, Dior', done: false },
+                    { id: 'b7', time: '18:45', title: 'Drinks Conservatorium', loc: 'Van Baerlestraat 27', cat: 'experience', url: 'https://www.conservatoriumhotel.com', maps: 'https://maps.google.com/?q=Conservatorium+Hotel+Amsterdam', notes: 'Bar mais bonito!', done: false },
+                    { id: 'b8', time: '20:00', title: 'Jantar Rijsel', loc: 'Marcusstraat 52b', cat: 'meal', url: 'https://www.rijsel.com', maps: 'https://maps.google.com/?q=Restaurant+Rijsel+Amsterdam', notes: 'Waterzooi, stoofvlees', done: false },
+                    { id: 'b9', time: '22:00', title: 'Magere Brug', loc: 'Ponte no Amstel', cat: 'experience', url: '', maps: 'https://maps.google.com/?q=Magere+Brug+Amsterdam', notes: 'A mais romântica!', done: false },
+                ],
+                // DAY 28 - JORDAAN MORNING + NOORD + ROMANTIC DINNER
+                28: [
+                    { id: 'c1', time: '09:30', title: 'Winkel 43', loc: 'Noordermarkt 43', cat: 'meal', url: 'https://www.winkel43.nl', maps: 'https://maps.google.com/?q=Winkel+43+Amsterdam', notes: 'Melhor tarte maçã!', done: false },
+                    { id: 'c2', time: '10:00', title: 'Noordermarkt (Sáb!)', loc: 'Praça Noordermarkt', cat: 'shopping', url: '', maps: 'https://maps.google.com/?q=Noordermarkt+Amsterdam', notes: 'Mercado bio, stroopwafel', done: false },
+                    { id: 'c3', time: '11:00', title: '9 Straatjes', loc: 'Entre canais', cat: 'shopping', url: '', maps: 'https://maps.google.com/?q=De+Negen+Straatjes+Amsterdam', notes: 'De Kaaskamer, vintage', done: false },
+                    { id: 'c4', time: '12:30', title: 'Almoço Toscanini', loc: 'Lindengracht 75', cat: 'meal', url: '', maps: 'https://maps.google.com/?q=Toscanini+Amsterdam', notes: 'Melhor italiano!', done: false },
+                    { id: 'c5', time: '14:00', title: 'NEMO Rooftop', loc: 'Oosterdok 2', cat: 'experience', url: 'https://www.nemosciencemuseum.nl', maps: 'https://maps.google.com/?q=NEMO+Science+Museum', notes: 'Vista 360° GRÁTIS!', done: false },
+                    { id: 'c6', time: '15:00', title: 'Ferry Noord', loc: 'Central Station', cat: '', url: '', maps: 'https://maps.google.com/?q=Amsterdam+Centraal+Ferry', notes: 'Grátis, 5 min', done: false },
+                    { id: 'c7', time: '15:30', title: 'Eye Filmmuseum', loc: 'IJpromenade 1', cat: 'museum', url: 'https://www.eyefilm.nl', maps: 'https://maps.google.com/?q=Eye+Filmmuseum+Amsterdam', notes: 'Edifício icónico!', done: false },
+                    { id: 'c8', time: '17:00', title: 'A\'DAM Lookout', loc: '20º andar', cat: 'experience', url: 'https://www.adamlookout.com', maps: 'https://maps.google.com/?q=ADAM+Lookout+Amsterdam', notes: 'Swing €7.50, vista!', done: false },
+                    { id: 'c9', time: '19:00', title: '🛶 Jantar no Canal', loc: 'Singel 250', cat: 'meal', url: 'https://www.amsterdamjewelcruises.com', maps: 'https://maps.google.com/?q=Singel+250+Amsterdam', notes: '💕 Barco antigo, 3 pratos, 2h canais iluminados!', done: false },
+                ],
+                // DAY 29 - CENTRO HISTÓRICO (Complete with all attractions!)
+                29: [
+                    { id: 'd1', time: '09:30', title: 'Pequeno-almoço', loc: 'Andaz', cat: 'meal', url: '', maps: '', notes: '', done: false },
+                    { id: 'd2', time: '10:30', title: 'Begijnhof', loc: 'Pátio escondido séc. XIV', cat: 'experience', url: '', maps: 'https://maps.google.com/?q=Begijnhof+Amsterdam', notes: '⭐ Imperdível! Oásis de paz', done: false },
+                    { id: 'd3', time: '11:00', title: 'Bloemenmarkt', loc: 'Singel canal', cat: 'experience', url: '', maps: 'https://maps.google.com/?q=Bloemenmarkt+Amsterdam', notes: 'Mercado flores flutuante', done: false },
+                    { id: 'd4', time: '11:30', title: 'Dam Square', loc: 'Coração de Amsterdam', cat: 'experience', url: '', maps: 'https://maps.google.com/?q=Dam+Square+Amsterdam', notes: '', done: false },
+                    { id: 'd5', time: '11:45', title: 'Royal Palace', loc: 'Dam Square', cat: 'museum', url: 'https://www.paleisamsterdam.nl', maps: 'https://maps.google.com/?q=Royal+Palace+Amsterdam', notes: 'Palácio Real, 45 min', done: false },
+                    { id: 'd6', time: '12:30', title: 'De Bijenkorf', loc: 'Dam 1', cat: 'shopping', url: 'https://www.debijenkorf.nl', maps: 'https://maps.google.com/?q=De+Bijenkorf+Amsterdam', notes: 'Grande armazém luxo', done: false },
+                    { id: 'd7', time: '13:15', title: 'Almoço Café Luxembourg', loc: 'Spui 24', cat: 'meal', url: '', maps: 'https://maps.google.com/?q=Cafe+Luxembourg+Amsterdam', notes: 'Grand café, croquetes!', done: false },
+                    { id: 'd8', time: '14:30', title: 'Anne Frank House', loc: 'Prinsengracht 263', cat: 'museum', url: 'https://www.annefrank.org', maps: 'https://maps.google.com/?q=Anne+Frank+House+Amsterdam', notes: '⚠️ RESERVAR! ~1.5h', done: false },
+                    { id: 'd9', time: '16:15', title: 'Westerkerk Tower', loc: 'Prinsengracht 281', cat: 'experience', url: '', maps: 'https://maps.google.com/?q=Westerkerk+Amsterdam', notes: 'Vista 360° €9', done: false },
+                    { id: 'd10', time: '17:15', title: 'De Wallen', loc: 'Red Light District', cat: 'experience', url: '', maps: 'https://maps.google.com/?q=Oude+Kerk+Amsterdam', notes: 'Oude Kerk séc. XIII', done: false },
+                    
+                    { id: 'd12', time: '19:30', title: 'Jantar Vinkeles', loc: 'Keizersgracht 384', cat: 'meal', url: 'https://www.vinkeles.com', maps: 'https://maps.google.com/?q=Vinkeles+Amsterdam', notes: '⭐⭐ Michelin! Despedida', done: false },
+                    { id: 'd13', time: '22:00', title: 'Último passeio', loc: 'Herengracht', cat: 'experience', url: '', maps: 'https://maps.google.com/?q=Herengracht+Amsterdam', notes: 'Despedida ✨', done: false },
+                ],
+                // DAY 30 - DEPARTURE
+                30: [
+                    { id: 'e1', time: '09:00', title: 'Último pequeno-almoço', loc: 'Andaz jardim', cat: 'meal', url: '', maps: '', notes: 'Aproveitar!', done: false },
+                    { id: 'e2', time: '10:30', title: 'Check-out', loc: 'Andaz', cat: '', url: '', maps: '', notes: '', done: false },
+                    { id: 'e3', time: '11:30', title: 'Transfer Schiphol', loc: 'Aeroporto', cat: '', url: '', maps: 'https://maps.google.com/?q=Schiphol+Airport', notes: 'Tot ziens! 👋', done: false },
+                ]
+            }
+        };
+
+        let state = { day: 26, hide: false, bookings: [], activities: {}, preTrip: [], restaurants: [] };
+        const $ = s => document.querySelector(s);
+        const $$ = s => document.querySelectorAll(s);
+
+        function load() {
+            const s = localStorage.getItem('ams24compact');
+            if (s) state = JSON.parse(s);
+            else {
+                state.bookings = JSON.parse(JSON.stringify(DATA.bookings));
+                state.activities = JSON.parse(JSON.stringify(DATA.activities));
+                state.preTrip = JSON.parse(JSON.stringify(DATA.preTrip));
+                state.restaurants = JSON.parse(JSON.stringify(DATA.restaurants));
+            }
+        }
+
+        function save() { localStorage.setItem('ams24compact', JSON.stringify(state)); }
+
+        function clock() {
+            $('#clock').textContent = new Date().toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' });
+        }
+
+        function renderChecklist() {
+            const section = $('#checklistSection');
+            const bookingsDone = state.bookings.filter(b => b.done).length;
+            const preTripDone = state.preTrip.filter(p => p.done).length;
+            const restDone = state.restaurants.filter(r => r.done).length;
+            
+            section.innerHTML = `
+                <div class="checklist-group">
+                    <div class="checklist-header">
+                        <h3>🎫 Reservas Obrigatórias</h3>
+                        <span class="count">${bookingsDone}/${state.bookings.length}</span>
+                    </div>
+                    <div class="checklist-items">
+                        ${state.bookings.map(b => `
+                            <div class="checklist-item${b.done ? ' done' : ''}">
+                                <div class="check-circle${b.done ? ' checked' : ''}" onclick="toggleChecklist('bookings','${b.id}')">${b.done ? '✓' : ''}</div>
+                                <div class="checklist-item-content">
+                                    <div class="checklist-item-title">${b.name}</div>
+                                    <div class="checklist-item-sub">📅 ${b.date}</div>
+                                </div>
+                                ${b.url ? `<a href="${b.url}" target="_blank" class="checklist-item-link${b.done ? ' booked' : ''}">↗</a>` : ''}
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+                
+                <div class="checklist-group">
+                    <div class="checklist-header blue">
+                        <h3>🍽️ Restaurantes</h3>
+                        <span class="count">${restDone}/${state.restaurants.length}</span>
+                    </div>
+                    <div class="checklist-items">
+                        ${state.restaurants.map(r => `
+                            <div class="checklist-item${r.done ? ' done' : ''}">
+                                <div class="check-circle${r.done ? ' checked' : ''}" onclick="toggleChecklist('restaurants','${r.id}')">${r.done ? '✓' : ''}</div>
+                                <div class="checklist-item-content">
+                                    <div class="checklist-item-title">${r.name}</div>
+                                    <div class="checklist-item-sub">📅 ${r.date} · ${r.sub || ''}</div>
+                                </div>
+                                ${r.url ? `<a href="${r.url}" target="_blank" class="checklist-item-link${r.done ? ' booked' : ''}">↗</a>` : ''}
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+                
+                <div class="checklist-group">
+                    <div class="checklist-header green">
+                        <h3>✈️ Preparação Pré-Viagem</h3>
+                        <span class="count">${preTripDone}/${state.preTrip.length}</span>
+                    </div>
+                    <div class="checklist-items">
+                        ${state.preTrip.map(p => `
+                            <div class="checklist-item${p.done ? ' done' : ''}">
+                                <div class="check-circle${p.done ? ' checked' : ''}" onclick="toggleChecklist('preTrip','${p.id}')">${p.done ? '✓' : ''}</div>
+                                <div class="checklist-item-content">
+                                    <div class="checklist-item-title">${p.name}</div>
+                                    <div class="checklist-item-sub">${p.sub}</div>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        window.toggleChecklist = (type, id) => {
+            const item = state[type].find(x => x.id === id);
+            if (item) { item.done = !item.done; save(); renderChecklist(); }
+        };
+
+        function setupDays() {
+            $$('.day-pill').forEach(p => {
+                p.onclick = () => {
+                    $$('.day-pill').forEach(x => x.classList.remove('active'));
+                    p.classList.add('active');
+                    const day = p.dataset.day;
+                    
+                    if (day === 'checklist') {
+                        $('#checklistSection').classList.remove('hidden');
+                        $('.progress-bar').classList.add('hidden');
+                        $('.controls').classList.add('hidden');
+                        $('#activities').classList.add('hidden');
+                        renderChecklist();
+                    } else {
+                        state.day = +day;
+                        $('#checklistSection').classList.add('hidden');
+                        $('.progress-bar').classList.remove('hidden');
+                        $('.controls').classList.remove('hidden');
+                        $('#activities').classList.remove('hidden');
+                        renderActivities();
+                        updateProgress();
+                    }
+                };
+            });
+        }
+
+        function renderActivities() {
+            const c = $('#activities');
+            const acts = state.activities[state.day] || [];
+            if (!acts.length) {
+                c.innerHTML = '<div class="empty"><div class="empty-emoji">🚲</div><div class="empty-text">Nenhuma actividade</div></div>';
+                return;
+            }
+            c.innerHTML = [...acts].sort((a, b) => a.time.localeCompare(b.time)).map(a => {
+                const hide = state.hide && a.done ? ' hidden' : '';
+                const cat = a.cat || '';
+                const catLabels = { meal: '🍽️', museum: '🏛️', experience: '✨', shopping: '🛍️' };
+                return `
+                <div class="activity ${cat}${a.done ? ' done' : ''}${hide}">
+                    <div class="activity-actions">
+                        <button class="act-icon" onclick="editAct('${a.id}')">✏️</button>
+                        <button class="act-icon del" onclick="delAct('${a.id}')">🗑️</button>
+                    </div>
+                    <div class="check-circle${a.done ? ' checked' : ''}" onclick="toggleAct('${a.id}')">${a.done ? '✓' : ''}</div>
+                    <div class="activity-content">
+                        <div class="activity-top">
+                            <span class="time-badge">${a.time}</span>
+                            ${catLabels[a.cat] ? `<span class="cat-badge ${a.cat}">${catLabels[a.cat]}</span>` : ''}
+                        </div>
+                        <h3 class="activity-title">${a.title}</h3>
+                        ${a.loc ? `<p class="activity-loc">📍 ${a.loc}</p>` : ''}
+                        ${a.notes ? `<div class="activity-notes">${a.notes}</div>` : ''}
+                        ${(a.url || a.maps) ? `
+                        <div class="activity-links">
+                            ${a.url ? `<a href="${a.url}" target="_blank" class="link-pill web">🔗 Web</a>` : ''}
+                            ${a.maps ? `<a href="${a.maps}" target="_blank" class="link-pill maps">📍 Maps</a>` : ''}
+                        </div>` : ''}
+                    </div>
+                </div>`;
+            }).join('');
+        }
+
+        window.toggleAct = id => {
+            const a = state.activities[state.day].find(x => x.id === id);
+            if (a) { a.done = !a.done; save(); renderActivities(); updateProgress(); }
+        };
+
+        window.delAct = id => {
+            if (confirm('Apagar?')) {
+                state.activities[state.day] = state.activities[state.day].filter(x => x.id !== id);
+                save(); renderActivities(); updateProgress();
+            }
+        };
+
+        window.editAct = id => {
+            const a = state.activities[state.day].find(x => x.id === id);
+            if (a) {
+                $('#modalTitle').textContent = 'Editar';
+                $('#editId').value = id;
+                $('#fTime').value = a.time;
+                $('#fTitle').value = a.title;
+                $('#fLoc').value = a.loc || '';
+                $('#fCat').value = a.cat || '';
+                $('#fUrl').value = a.url || '';
+                $('#fMaps').value = a.maps || '';
+                $('#fNotes').value = a.notes || '';
+                $('#modalBg').classList.add('open');
+            }
+        };
+
+        function updateProgress() {
+            const acts = state.activities[state.day] || [];
+            const total = acts.length, done = acts.filter(a => a.done).length;
+            const pct = total ? Math.round(done / total * 100) : 0;
+            $('#progressFill').style.width = pct + '%';
+            $('#progressPct').textContent = pct + '%';
+        }
+
+        $('#hideToggle').onclick = function() {
+            state.hide = !state.hide;
+            this.classList.toggle('on', state.hide);
+            renderActivities();
+        };
+
+        $('#addBtn').onclick = () => {
+            $('#modalTitle').textContent = 'Adicionar';
+            $('#actForm').reset();
+            $('#editId').value = '';
+            $('#modalBg').classList.add('open');
+        };
+
+        $('#modalClose').onclick = $('#cancelBtn').onclick = () => $('#modalBg').classList.remove('open');
+        $('#modalBg').onclick = e => { if (e.target === $('#modalBg')) $('#modalBg').classList.remove('open'); };
+
+        $('#actForm').onsubmit = e => {
+            e.preventDefault();
+            const id = $('#editId').value;
+            const obj = {
+                id: id || 'a' + Date.now(),
+                time: $('#fTime').value,
+                title: $('#fTitle').value,
+                loc: $('#fLoc').value,
+                cat: $('#fCat').value,
+                url: $('#fUrl').value,
+                maps: $('#fMaps').value,
+                notes: $('#fNotes').value,
+                done: false
+            };
+            if (id) {
+                const idx = state.activities[state.day].findIndex(x => x.id === id);
+                if (idx > -1) { obj.done = state.activities[state.day][idx].done; state.activities[state.day][idx] = obj; }
+            } else {
+                if (!state.activities[state.day]) state.activities[state.day] = [];
+                state.activities[state.day].push(obj);
+            }
+            save(); renderActivities(); updateProgress();
+            $('#modalBg').classList.remove('open');
+        };
+
+        window.resetData = () => { if (confirm('Repor tudo?')) { localStorage.removeItem('ams24compact'); location.reload(); } };
+
+        function init() {
+            load(); clock(); setInterval(clock, 1000);
+            setupDays(); renderActivities(); updateProgress();
+        }
+
+        init();
+    </script>
+</body>
+</html>
